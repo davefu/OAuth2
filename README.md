@@ -4,7 +4,7 @@ This repository is being developed and it's highly unstable.
 
 Requirements
 ------------
-Drahak/OAuth2 requires PHP version 5.3.0 or higher. The only production dependency is [Nette framework 2.0.x](http://www.nette.org).
+Drahak/OAuth2 requires PHP version 5.6.0 or higher. The only production dependency is [Nette framework 2.4.x](http://www.nette.org).
 
 Installation & setup
 --------------------

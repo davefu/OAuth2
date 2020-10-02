@@ -1,4 +1,5 @@
 .idea
 libs/
 tests/temp/
-
+composer.lock
+/nbproject
