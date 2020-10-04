@@ -8,7 +8,6 @@ CREATE TABLE oauth_user (
 -- OAuth2 clients
 CREATE TABLE oauth_client (
 	client_id 		CHAR(36)		  PRIMARY KEY,
-	name          VARCHAR(50)   NOT NULL,
 	secret		    CHAR(64)	    NOT NULL,
 	redirect_url	VARCHAR(255)	NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -41,7 +40,7 @@ CREATE TABLE oauth_access_token (
   access_token    CHAR(64)    PRIMARY KEY,
   client_id       CHAR(36)    NOT NULL,
   user_id         CHAR(36)    NULL,
-  expires_at      TIMESTAMP   NOT NULL,
+  expires_at      DATETIME   NOT NULL,
 
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES oauth_user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (client_id) REFERENCES oauth_client (client_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -52,7 +51,7 @@ CREATE TABLE oauth_authorization_code (
   authorization_code  CHAR(64)    PRIMARY KEY,
   client_id           CHAR(36)    NOT NULL,
   user_id             CHAR(36)    NOT NULL,
-  expires_at          TIMESTAMP   NOT NULL,
+  expires_at          DATETIME   NOT NULL,
 
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES oauth_user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (client_id) REFERENCES oauth_client (client_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -63,7 +62,7 @@ CREATE TABLE oauth_refresh_token (
   refresh_token       CHAR(64)    PRIMARY KEY,
   client_id           CHAR(36)    NOT NULL,
   user_id             CHAR(36)    NULL,
-  expires_at          TIMESTAMP   NOT NULL,
+  expires_at          DATETIME   NOT NULL,
 
   CONSTRAINT FOREIGN KEY (user_id) REFERENCES oauth_user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FOREIGN KEY (client_id) REFERENCES oauth_client (client_id) ON DELETE CASCADE ON UPDATE CASCADE

@@ -3,9 +3,8 @@ namespace Tests;
 
 use Nette\Configurator;
 use Nette\Database\Connection;
-use Nette\Database\SelectionFactory;
+use Nette\Database\Context;
 use Nette\DI\Container;
-use Nette\Templating\Helpers;
 use Tests\TestCase;
 
 /**
@@ -19,7 +18,7 @@ abstract class DatabaseTestCase extends TestCase
 	/** @var Connection */
 	protected $connection;
 
-	/** @var SelectionFactory */
+	/** @var Context */
 	protected $selectionFactory;
 
 	/** @var Container */
@@ -40,7 +39,7 @@ abstract class DatabaseTestCase extends TestCase
 	protected function setUp()
 	{
 		parent::setUp();
-		\Tester\Helpers::lock('db', dirname(TEMP_DIR));
+		\Tester\Environment::lock('db', dirname(TEMP_DIR));
 
 		$this->connection = $this->getConnection();
 		$this->selectionFactory = $this->getSelectionFactory();
@@ -91,7 +90,8 @@ abstract class DatabaseTestCase extends TestCase
 	 */
 	protected function getSchemaSql()
 	{
-		return file_get_contents(__DIR__ . '/../../sql/schema.sql');
+		//TODO: Forced MySQL, add some automation?
+		return file_get_contents(__DIR__ . '/../../sql/MySQL/migrations/V.0.0.1__create_base_oauth2_structure.sql');
 	}
 
 	/**
@@ -100,7 +100,8 @@ abstract class DatabaseTestCase extends TestCase
 	 */
 	protected function getDataSql()
 	{
-		return file_get_contents(__DIR__ . '/../../sql/data.sql');
+		//TODO: Forced MySQL, add some automation?
+		return file_get_contents(__DIR__ . '/../../sql/MySQL/data/V.0.0.1__add_static_data.sql');
 	}
 
 	/**
@@ -129,7 +130,20 @@ abstract class DatabaseTestCase extends TestCase
 	 */
 	protected function getSelectionFactory()
 	{
-		return $this->container->getByType('Nette\Database\SelectionFactory');
+		return $this->container->getByType('Nette\Database\Context');
 	}
 
+	/**
+	 * @return string
+	 */
+	protected function getDefaultClientId() {
+		return 'b6daa7e9-ebb7-4b97-9f4c-61615f2de94d';
+	}
+
+	/**
+	 * @return string|null
+	 */
+	protected function getDefaultClientSecret() {
+		return 'a2a2f11ece9c35f117936fc44529a174e85ca68005b7b0d1d0d2b5842d907f12';
+	}
 }

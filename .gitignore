@@ -1,5 +1,5 @@
 .idea
 libs/
-tests/temp/
+coverage.dat
 composer.lock
 /nbproject

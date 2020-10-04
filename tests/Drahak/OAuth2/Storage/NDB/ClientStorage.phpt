@@ -32,8 +32,8 @@ class ClientStorageTest extends DatabaseTestCase
 
 	public function testGetCientByIdAndSecret()
 	{
-		$id = 'd3a213ad-d142-11';
-		$secret = 'a2a2f11ece9c35f117936fc44529a174e85ca68005b7b0d1d0d2b5842d907f12';
+		$id = $this->getDefaultClientId();
+		$secret = $this->getDefaultClientSecret();
 
 		$client = $this->storage->getClient($id, $secret);
 		Assert::true($client instanceof IClient);
@@ -43,7 +43,7 @@ class ClientStorageTest extends DatabaseTestCase
 
 	public function testWheneverIsUserAllowedToUseGrantType()
 	{
-		$id = 'd3a213ad-d142-11';
+		$id = $this->getDefaultClientId();
 
 		$canUseGrant = $this->storage->canUseGrantType($id, IGrant::CLIENT_CREDENTIALS);
 		Assert::true($canUseGrant);
@@ -51,7 +51,7 @@ class ClientStorageTest extends DatabaseTestCase
 
 	public function testUserIsNotAllowedToUseGrantType()
 	{
-		$id = 'd3a213ad-d142-11';
+		$id = $this->getDefaultClientId();
 
 		$canUseGrant = $this->storage->canUseGrantType($id, 'test_credentials');
 		Assert::false($canUseGrant);

@@ -61,7 +61,7 @@ class ClientStorage implements IClientStorage
 	 */
 	public function canUseGrantType($clientId, $grantType)
 	{
-		$result = $this->getTable()->getConnection()->query('
+		$result = $this->context->getConnection()->query('
 			SELECT g.name
 			FROM oauth_client_grant AS cg
 			RIGHT JOIN oauth_grant AS g ON cg.grant_id = cg.grant_id AND g.name = ?

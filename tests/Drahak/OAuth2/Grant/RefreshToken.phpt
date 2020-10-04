@@ -42,9 +42,7 @@ class RefreshTokenTest extends GrantTestCase
 		$this->refreshToken->expects('getEntity')->once()->with($data['refresh_token']);
 		$this->refreshToken->expects('getStorage')->once()->andReturn($storage);
 
-		$method = $this->grant->getReflection()->getMethod('verifyRequest');
-		$method->setAccessible(TRUE);
-		$method->invoke($this->grant);
+		Assert::noError(function() { Assert::with($this->grant, function() { $this->verifyRequest(); }); });
 	}
 
 	public function testGenerateAccessToken()
@@ -72,9 +70,7 @@ class RefreshTokenTest extends GrantTestCase
 		$this->accessTokenEntity->expects('getAccessToken')->once()->andReturn($access);
 		$this->refreshTokenEntity->expects('getRefreshToken')->once()->andReturn($refresh);
 
-		$method = $this->grant->getReflection()->getMethod('generateAccessToken');
-		$method->setAccessible(TRUE);
-		$response = $method->invoke($this->grant);
+		$response = Assert::with($this->grant, function() { return $this->generateAccessToken(); });
 
 		Assert::equal($response['access_token'], $access);
 		Assert::equal($response['expires_in'], $lifetime);

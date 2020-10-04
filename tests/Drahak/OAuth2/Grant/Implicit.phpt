@@ -51,9 +51,7 @@ class ImplicitTest extends GrantTestCase
 
 		$this->accessTokenEntity->expects('getAccessToken')->once()->andReturn($access);
 
-		$method = $this->grant->getReflection()->getMethod('generateAccessToken');
-		$method->setAccessible(TRUE);
-		$response = $method->invoke($this->grant);
+		$response = Assert::with($this->grant, function() { return $this->generateAccessToken(); });
 
 		Assert::equal($response['access_token'], $access);
 		Assert::equal($response['expires_in'], $lifetime);

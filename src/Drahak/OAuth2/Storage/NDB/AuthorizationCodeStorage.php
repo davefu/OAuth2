@@ -60,10 +60,10 @@ class AuthorizationCodeStorage implements IAuthorizationCodeStorage
 			'authorization_code' => $authorizationCode->getAuthorizationCode(),
 			'client_id' => $authorizationCode->getClientId(),
 			'user_id' => $authorizationCode->getUserId(),
-			'expires' => $authorizationCode->getExpires()
+			'expires_at' => $authorizationCode->getExpires()
 		));
 
-		$connection = $this->getTable()->getConnection();
+		$connection = $this->context->getConnection();
 		$connection->beginTransaction();
 		try {
 			foreach ($authorizationCode->getScope() as $scope) {
@@ -102,7 +102,7 @@ class AuthorizationCodeStorage implements IAuthorizationCodeStorage
 		/** @var ActiveRow $row */
 		$row = $this->getTable()
 			->where(array('authorization_code' => $authorizationCode))
-			->where(new SqlLiteral('TIMEDIFF(expires, NOW()) >= 0'))
+			->where(new SqlLiteral('TIMEDIFF(expires_at, NOW()) >= 0'))
 			->fetch();
 
 		if (!$row) return NULL;
@@ -113,7 +113,7 @@ class AuthorizationCodeStorage implements IAuthorizationCodeStorage
 
 		return new AuthorizationCode(
 			$row['authorization_code'],
-			new \DateTime($row['expires']),
+			new \DateTime($row['expires_at']),
 			$row['client_id'],
 			$row['user_id'],
 			array_keys($scopes)

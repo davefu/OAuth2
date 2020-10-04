@@ -7,7 +7,7 @@ require_once __DIR__ . '/TestCase.php';
 
 
 // configure environment
-Tester\Helpers::setup();
+Tester\Environment::setup();
 class_alias('Tester\Assert', 'Assert');
 date_default_timezone_set('Europe/Prague');
 
@@ -21,7 +21,7 @@ $_ENV = $_GET = $_POST = array();
 
 if (extension_loaded('xdebug')) {
 	xdebug_disable();
-	Tester\CodeCoverage\Collector::start(__DIR__ . '/coverage.dat');
+	Tester\CodeCoverage\Collector::start(__DIR__ . '/coverage.dat', Tester\CodeCoverage\Collector::ENGINE_XDEBUG);
 }
 
 function id($val) {
@@ -29,5 +29,5 @@ function id($val) {
 }
 
 function run(Tests\TestCase $testCase) {
-	$testCase->run(isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : NULL);
+	$testCase->run();
 }

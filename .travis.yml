@@ -30,7 +30,7 @@ install:
 
 before_script:
   - mkdir tests/temp
-  - ./libs/bin/parallel-lint -e php,phpt --exclude libs .
+#  - ./libs/bin/parallel-lint -e php,phpt --exclude libs .
 
 script:
   - ./libs/bin/tester -p $TESTER_PHP_BIN ./tests/

@@ -35,9 +35,7 @@ class ClientCredentialsTest extends GrantTestCase
 			->andReturn(NULL);
 
 		Assert::throws(function()  {
-			$method = $this->grant->getReflection()->getMethod('verifyRequest');
-			$method->setAccessible(TRUE);
-			$method->invoke($this->grant);
+			Assert::with($this->grant, function() { $this->verifyRequest(); });
 		}, 'Drahak\OAuth2\UnauthorizedClientException');
 	}
 
@@ -66,9 +64,7 @@ class ClientCredentialsTest extends GrantTestCase
 		$this->accessTokenEntity->expects('getAccessToken')->once()->andReturn($access);
 		$this->refreshTokenEntity->expects('getRefreshToken')->once()->andReturn($refresh);
 
-		$method = $this->grant->getReflection()->getMethod('generateAccessToken');
-		$method->setAccessible(TRUE);
-		$response = $method->invoke($this->grant);
+		$response = Assert::with($this->grant, function() { return $this->generateAccessToken(); });
 
 		Assert::equal($response['access_token'], $access);
 		Assert::equal($response['expires_in'], $lifetime);

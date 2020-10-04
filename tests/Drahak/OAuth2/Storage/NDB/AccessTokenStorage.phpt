@@ -79,9 +79,9 @@ class AccessTokenStorageTest extends DatabaseTestCase
 	protected function createEntity($userId = NULL, $scope = array())
 	{
 		return new AccessToken(
-			hash('sha256', Nette\Utils\Strings::random()),
+			hash('sha256', Nette\Utils\Random::generate()),
 			new \DateTime('20.1.2050'),
-			'd3a213ad-d142-11',
+			$this->getDefaultClientId(),
 			$userId,
 			$scope
 		);

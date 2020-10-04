@@ -78,9 +78,9 @@ class AuthorizationCodeStorageTest extends DatabaseTestCase
 	protected function createEntity($scope = array())
 	{
 		return new AuthorizationCode(
-			hash('sha256', Nette\Utils\Strings::random()),
+			hash('sha256', Nette\Utils\Random::generate()),
 			new \DateTime('20.1.2050'),
-			'd3a213ad-d142-11',
+			$this->getDefaultClientId(),
 			'5fcb1af9-d5cd-11',
 			$scope
 		);

@@ -8,7 +8,6 @@ CREATE TABLE oauth_user (
 -- OAuth2 clients
 CREATE TABLE oauth_client (
 	client_id 		UUID		      PRIMARY KEY,
-	name          VARCHAR(50)   NOT NULL,
 	secret		    CHAR(64)	    NOT NULL,
 	redirect_url	VARCHAR(255)	NOT NULL
 );
