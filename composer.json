@@ -21,7 +21,8 @@
 	},
 	"require-dev": {
 		"nette/tester": "~2.0",
-		"janmarek/mockista": "dev-master"
+		"janmarek/mockista": "dev-master",
+		"php-parallel-lint/php-parallel-lint": "^1.2"
 	},
 	"autoload": {
 		"psr-0": {
